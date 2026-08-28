@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isekai King — Reels</title>
+<meta name="description" content="Isekai King — Motion Graphic Designer & Video Editor. Reel showcase.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Space Grotesk loaded with a weight RANGE (300..700) so the browser gets the
+     variable font and can smoothly animate font-weight for the hero title. -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#07070a;
+  --canvas-2:#0b0b10;
+  --surface-glass: rgba(255,255,255,0.03);
+  --surface-glass-hover: rgba(255,255,255,0.055);
+  --surface-deep: rgba(7,7,10,0.97);
+
+  --ice:#fdf3f1;
+  --frost:#f2e9e6;
+  --moon:#b9b3ae;
+  --fog:#7d7873;
+  --pure:#ffffff;
+
+  --red:#ff3b2f;
+  --red-soft: rgba(255,59,47,0.14);
+  --ember:#ff8a5c;
+
+  --edge: rgba(255,120,90,0.12);
+  --edge-strong: rgba(255,120,90,0.22);
+  --grid-line: rgba(255,120,90,0.05);
+
+  --r-card:16px;
+  --r-badge:6px;
+  --r-btn:999px;
+
+  --gap-section:120px;
+  --pad-card:24px;
+
+  --ease: cubic-bezier(.16,.84,.32,1);
+
+  --font-display:'Space Grotesk',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{background:var(--canvas);scroll-behavior:smooth;}
+html,body{overflow-x:hidden;}
+body{
+  background:var(--canvas);
+  color:var(--frost);
+  font-family:var(--font-body);
+  line-height:1.5;
+  cursor:none;
+}
+@media (max-width:900px){ body{cursor:auto;} }
+::selection{background:var(--red);color:#08080a;}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+section{position:relative;z-index:1;}
+
+/* ambient bg */
+.bp-grid{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size:84px 84px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, black 30%, transparent 85%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, black 30%, transparent 85%);
+  opacity:0.9;
+}
+.grain{
+  position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:0.035;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain-move .5s steps(2) infinite;
+}
+@keyframes grain-move{0%{transform:translate(0,0)}50%{transform:translate(-2%,1%)}100%{transform:translate(1%,-1%)}}
+
+/* cursor / scroll rail */
+.playhead{position:fixed;top:0;left:0;width:20px;height:20px;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .18s var(--ease),height .18s var(--ease);}
+.playhead::before{content:'';position:absolute;inset:0;border:1.5px solid var(--red);border-radius:50%;}
+.playhead::after{content:'';position:absolute;top:50%;left:50%;width:3px;height:3px;background:var(--red);transform:translate(-50%,-50%);border-radius:50%;}
+.playhead.hover{width:48px;height:48px;}
+@media (max-width:900px){.playhead{display:none;}}
+.scroll-rail{position:fixed;top:0;left:0;height:2px;width:100%;z-index:9997;background:rgba(255,59,47,0.06);}
+.scroll-rail__fill{height:100%;width:0%;background:linear-gradient(90deg,var(--red),var(--ember));box-shadow:0 0 12px var(--red);transition:width .05s linear;}
+
+.display{font-family:var(--font-display);font-weight:600;}
+.mono{font-family:var(--font-mono);letter-spacing:0.06em;}
+.grad-text{color:var(--ice);}
+.grad-text.red{color:var(--ice);}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .grad-text{background:linear-gradient(180deg, var(--ice) 0%, var(--moon) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;}
+  .grad-text.red{background:linear-gradient(140deg, var(--ice) 0%, var(--red) 120%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;}
+}
+
+.eyebrow-row{display:flex;align-items:center;gap:18px;justify-content:center;margin-bottom:28px;}
+.eyebrow-row .line{height:1px;flex:1;max-width:64px;background:linear-gradient(90deg, transparent, var(--edge-strong), transparent);}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:0.22em;color:var(--red);text-transform:uppercase;white-space:nowrap;}
+
+.section-head{max-width:640px;margin:0 auto 56px;text-align:center;}
+.section-title{font-size:clamp(30px,5vw,52px);line-height:1.08;font-weight:600;}
+.section-sub{margin-top:16px;color:var(--moon);font-size:16px;line-height:1.6;}
+
+.container{max-width:1200px;margin:0 auto;padding:0 5vw;}
+.section-pad{padding:var(--gap-section) 0;}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+.pill{
+  display:inline-flex;align-items:center;gap:8px;border-radius:var(--r-btn);padding:12px 24px;
+  font-family:var(--font-mono);font-size:12px;letter-spacing:0.1em;
+  background:rgba(255,255,255,0.04);border:1px solid var(--edge);color:var(--pure);text-decoration:none;
+  transition:all .3s var(--ease);
+}
+.pill:hover{background:rgba(255,255,255,0.08);border-color:var(--edge-strong);}
+.pill-solid{background:linear-gradient(140deg, var(--red), #7a1010);border:none;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,0.08) inset, 0 8px 24px rgba(255,59,47,0.35);}
+.pill-solid:hover{box-shadow:0 0 0 1px rgba(255,255,255,0.12) inset, 0 10px 30px rgba(255,59,47,0.5);transform:translateY(-1px);}
+
+/* header */
+header{position:fixed;top:0;left:0;width:100%;z-index:500;padding:22px 5vw;}
+.header-inner{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;
+  background:rgba(7,7,10,0.55);backdrop-filter:blur(14px);
+  border:1px solid var(--edge);border-radius:var(--r-btn);padding:12px 22px;
+}
+.logo-mark{font-family:var(--font-display);font-weight:600;font-size:14px;justify-self:start;}
+.header-mark{justify-self:center;width:26px;height:26px;display:flex;align-items:center;justify-content:center;color:var(--red);}
+.header-mark svg{width:100%;height:100%;}
+.header-cta{justify-self:end;display:flex;align-items:center;gap:10px;}
+.header-cta .icon-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--edge);display:flex;align-items:center;justify-content:center;color:var(--moon);transition:all .25s var(--ease);}
+.header-cta .icon-btn:hover{color:var(--pure);border-color:var(--edge-strong);}
+.header-cta .pill{padding:9px 18px;}
+.nav-links{display:flex;gap:8px;}
+.nav-links a{font-family:var(--font-mono);font-size:11px;letter-spacing:0.08em;padding:8px 14px;border-radius:var(--r-btn);color:var(--moon);text-decoration:none;transition:all .25s var(--ease);}
+.nav-links a:hover{color:var(--pure);background:rgba(255,255,255,0.05);}
+
+/* ============ HERO — MOTION DESIGN ============ */
+.hero{
+  min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  position:relative;overflow:hidden;padding:140px 5vw 60px;text-align:center;
+}
+/*
+  ADD YOUR BACKGROUND PHOTO HERE:
+  1. Create a folder named "images" next to this HTML file.
+  2. Drop your portrait/photo in as images/hero-bg.jpg (or change the filename below).
+  3. It sits behind the text automatically, dimmed by .hero-bg__overlay.
+*/
+.hero-bg{position:absolute;inset:0;z-index:0;}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 20%;opacity:0.55;filter:grayscale(0.4) contrast(1.05);}
+.hero-bg__overlay{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 30%, transparent 20%, var(--canvas) 78%),
+    linear-gradient(180deg, rgba(7,7,10,0.55) 0%, rgba(7,7,10,0.35) 40%, var(--canvas) 92%);
+}
+
+.hero-eyebrow{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:30px;}
+.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);animation:pulse 1.6s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.hero-eyebrow span{font-family:var(--font-mono);font-size:12px;letter-spacing:0.24em;color:var(--moon);}
+
+.hero-mega{position:relative;z-index:2;font-family:var(--font-display);line-height:0.92;letter-spacing:-0.01em;}
+.hero-mega .row{font-size:clamp(56px,13vw,190px);display:block;}
+.hero-mega .row.top{color:var(--frost);animation:weightLoop 5s ease-in-out infinite;}
+.hero-mega .row.bottom{animation:weightLoop 5s ease-in-out infinite;animation-delay:-2.5s;}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .hero-mega .row.bottom{
+    background:linear-gradient(140deg, var(--ice) 0%, var(--red) 120%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  }
+}
+.hero-mega .row.bottom{color:var(--red);}
+@keyframes weightLoop{
+  0%,100%{font-weight:700;}
+  50%{font-weight:300;}
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-mega .row{animation:none !important;font-weight:600 !important;}
+}
+
+.hero-role{position:relative;z-index:2;margin-top:28px;font-family:var(--font-mono);font-size:clamp(12px,1.6vw,15px);letter-spacing:0.3em;color:var(--moon);}
+.hero-role b{color:var(--pure);font-weight:500;}
+.hero-role .sep{color:var(--red);}
+
+.hero-foot{position:relative;z-index:2;display:flex;justify-content:center;align-items:center;gap:16px;margin-top:48px;flex-wrap:wrap;}
+.hero-loc{position:relative;z-index:2;text-align:center;font-family:var(--font-mono);font-size:11px;letter-spacing:0.14em;color:var(--fog);margin-top:24px;}
+.hero-loc .r{color:var(--red);}
+
+/* ============ VIDEO FRAME (shared) ============ */
+.video-frame{
+  position:relative;overflow:hidden;border-radius:var(--r-card);aspect-ratio:16/9;
+  background:radial-gradient(ellipse at 50% 30%, rgba(255,59,47,0.08), transparent 60%), var(--canvas-2);
+  border:1px solid var(--edge);
+}
+.video-frame.vertical{aspect-ratio:9/16;}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+.video-frame .grid-overlay{position:absolute;inset:0;background-image:repeating-linear-gradient(115deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 26px);pointer-events:none;}
+.video-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
+.play-ring{width:60px;height:60px;border-radius:50%;border:1px solid var(--edge-strong);display:flex;align-items:center;justify-content:center;transition:all .4s var(--ease);}
+.video-frame:hover .play-ring{border-color:var(--red);box-shadow:0 0 30px rgba(255,59,47,0.35);transform:scale(1.08);}
+.play-ring::after{content:'';width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:14px solid var(--pure);margin-left:4px;}
+.video-note{font-family:var(--font-mono);font-size:10px;letter-spacing:0.12em;color:var(--fog);text-align:center;padding:0 20px;}
+.video-meta{
+  position:absolute;left:0;bottom:0;width:100%;padding:18px;display:flex;justify-content:space-between;align-items:flex-end;
+  background:linear-gradient(0deg, rgba(0,0,0,0.75), transparent);opacity:0;transform:translateY(10px);transition:.4s var(--ease);
+  pointer-events:none;
+}
+.video-frame:hover .video-meta{opacity:1;transform:translateY(0);}
+.video-meta .idx{font-family:var(--font-mono);font-size:10px;color:var(--frost);}
+.video-meta .tag{font-family:var(--font-mono);font-size:10px;color:var(--red);letter-spacing:0.08em;}
+
+/* landscape grid: 2 up */
+.grid-landscape{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+@media (max-width:800px){.grid-landscape{grid-template-columns:1fr;}}
+
+/* reels grid: 3 up */
+.grid-reels{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto;}
+@media (max-width:800px){.grid-reels{grid-template-columns:1fr;max-width:340px;}}
+@media (min-width:801px) and (max-width:1000px){.grid-reels{grid-template-columns:repeat(2,1fr);}}
+
+/* ============ FOOTER / CONTACT ============ */
+.contact-card{padding:70px 5vw;border-radius:32px;text-align:center;position:relative;overflow:hidden;background:var(--surface-glass);border:1px solid var(--edge);}
+.contact-card .glow{position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:80%;height:60%;background:radial-gradient(ellipse, rgba(255,59,47,0.25), transparent 70%);pointer-events:none;}
+.contact-card h2{font-family:var(--font-display);font-weight:600;font-size:clamp(32px,6vw,70px);line-height:1;position:relative;z-index:1;}
+.contact-sub{margin-top:18px;color:var(--moon);font-size:15px;max-width:44ch;margin-inline:auto;position:relative;z-index:1;}
+.contact-links{margin-top:44px;display:flex;flex-wrap:wrap;gap:20px;justify-content:center;position:relative;z-index:1;}
+
+footer{padding:60px 5vw 40px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;}
+footer .fname{font-family:var(--font-display);font-weight:600;font-size:clamp(22px,5vw,44px);}
+footer .ftag{font-family:var(--font-mono);font-size:11px;letter-spacing:0.3em;color:var(--fog);}
+.copyright{margin-top:20px;font-size:10px;color:var(--fog);letter-spacing:0.06em;}
+</style>
+</head>
+<body>
+
+<div class="bp-grid"></div>
+<div class="grain"></div>
+<div class="scroll-rail"><div class="scroll-rail__fill" id="scrollFill"></div></div>
+<div class="playhead" id="playhead"></div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-mark">ISEKAI KING</div>
+    <div class="header-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L22 12L12 22L2 12L12 2Z" stroke="currentColor" stroke-width="1.4"/></svg>
+    </div>
+    <div class="header-cta">
+        <div class="nav-links">
+    <a href="../index.html">Home</a>
+  </div>
+      <a href="https://instagram.com/imisekaiking" target="_blank" rel="noopener" class="icon-btn" title="Instagram" aria-label="Instagram">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.02-3.58.07-4.85c.15-3.23 1.67-4.77 4.92-4.92 1.27-.06 1.65-.07 4.85-.07zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 4-4 4 4 0 0 1-4 4zm6.4-11.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/></svg>
+      </a>
+      <a href="#contact" class="pill pill-solid">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO — MOTION DESIGN ================= -->
+<section class="hero">
+  <div class="hero-bg">
+    <!-- Swap this src once you've added your photo to an "images" folder -->
+    <img src="Images/Tranparent Me.png" alt="Isekai King">
+    <div class="hero-bg__overlay"></div>
+  </div>
+
+  <div class="hero-eyebrow"><span class="dot"></span><span class="mono">REC · 00:00:00:00</span></div>
+
+  <h1 class="hero-mega">
+    <span class="row top">MOTION</span>
+    <span class="row bottom">DESIGN</span>
+  </h1>
+
+  <div class="hero-role">VIDEO EDITOR <span class="sep">/</span> MOTION DESIGN <span class="sep">/</span> <b>REEL SHOWCASE</b></div>
+
+  <div class="hero-foot">
+    <a href="#reels-recent" class="pill pill-solid">Watch the reels</a>
+    <a href="#contact" class="pill">Get in touch</a>
+  </div>
+
+  <div class="hero-loc">LUCKNOW, INDIA <span class="r">— AVAILABLE FOR CREATIVE PROJECTS</span></div>
+</section>
+
+<!-- ================= 9:16 — RECENT WORKS ================= -->
+<section class="section-pad container" id="reels-recent">
+  <div class="eyebrow-row reveal"><div class="line"></div><span class="eyebrow">Built for the Scroll</span><div class="line"></div></div>
+  <div class="section-head reveal">
+    <h2 class="section-title">9:16 — Recent Works</h2>
+    <p class="section-sub">Short-form cuts framed for mobile-first platforms.</p>
+  </div>
+
+  <div class="grid-reels reveal">
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/jFiVapt20oA"
+        title="Recent Works — Reel 01"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">01</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/dWCFoNM3LHc"
+        title="Recent Works — Reel 02"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">02</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/Y5zmRwU4F08"
+        title="Recent Works — Reel 03"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">03</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/gIGFQXUE0lw"
+        title="Recent Works — Reel 04"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">04</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/bMwVnxVy-kA"
+        title="Recent Works — Reel 05"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">05</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/-KZOhHLDASY"
+        title="Recent Works — Reel 06"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">06</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/N6uEmMETF4o"
+        title="Recent Works — Reel 07"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">07</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/yf6uXZMDjL0"
+        title="Recent Works — Reel 08"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">08</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/gDW4Qq5Izhg"
+        title="Recent Works — Reel 09"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">09</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 9:16 — CLIENT CHOICE (DOCTOR) ================= -->
+<section class="section-pad container">
+  <div class="eyebrow-row reveal"><div class="line"></div><span class="eyebrow">Built for the Scroll</span><div class="line"></div></div>
+  <div class="section-head reveal">
+    <h2 class="section-title">9:16 — Client Choice (Doctor)</h2>
+    <p class="section-sub">Short-form cuts framed for mobile-first platforms.</p>
+  </div>
+
+  <div class="grid-reels reveal">
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/oCByqEE88RU"
+        title="Doctor Series — Reel 01"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">01</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/otU_co0Pnu4"
+        title="Doctor Series — Reel 02"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">02</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/9i4yy6Fq6_w"
+        title="Doctor Series — Reel 03"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">03</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/fR6nvvwOfbs"
+        title="Doctor Series — Reel 04"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">04</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/2-4_9AFnYaM"
+        title="Doctor Series — Reel 05"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">05</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/sDqbIZt45o8"
+        title="Doctor Series — Reel 06"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">06</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 9:16 — KID TOYS ================= -->
+<section class="section-pad container">
+  <div class="eyebrow-row reveal"><div class="line"></div><span class="eyebrow">Built for the Scroll</span><div class="line"></div></div>
+  <div class="section-head reveal">
+    <h2 class="section-title">9:16 — Kid Toys</h2>
+    <p class="section-sub">Short-form cuts framed for mobile-first platforms.</p>
+  </div>
+
+  <div class="grid-reels reveal">
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/LKntz6SkulQ"
+        title="Kid Toys — Reel 01"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">01</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/hLlK6pa-G8w"
+        title="Kid Toys — Reel 02"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">02</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/ylZ1TEJmZ5E"
+        title="Kid Toys — Reel 03"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">03</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 9:16 — FOR FUN ================= -->
+<section class="section-pad container">
+  <div class="eyebrow-row reveal"><div class="line"></div><span class="eyebrow">Built for the Scroll</span><div class="line"></div></div>
+  <div class="section-head reveal">
+    <h2 class="section-title">9:16 — For Fun</h2>
+    <p class="section-sub">Short-form cuts framed for mobile-first platforms.</p>
+  </div>
+
+  <div class="grid-reels reveal">
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/UhEYRb504Go"
+        title="For Fun — Reel 01"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">01</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/lxEfOwcyZ7w"
+        title="For Fun — Reel 02"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">02</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+
+    <div class="video-frame vertical">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/wo1Fmbh2sb4"
+        title="For Fun — Reel 03"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">03</span><span class="tag">REEL / 9:16</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 16:9 — FLOW WITH MOTION (moved to last, above contact) ================= -->
+<section class="section-pad container" id="landscape">
+  <div class="eyebrow-row reveal"><div class="line"></div><span class="eyebrow">Full Frame</span><div class="line"></div></div>
+  <div class="section-head reveal">
+    <h2 class="section-title">16:9 — Flow With Motion</h2>
+    <p class="section-sub">Widescreen edits, built for full-frame viewing.</p>
+  </div>
+
+  <div class="grid-landscape reveal">
+    <div class="video-frame">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/jlXxy1szbZ4"
+        title="Landscape cut 01"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">01</span><span class="tag">LANDSCAPE / 16:9</span></div>
+    </div>
+
+    <div class="video-frame">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/GsPUU9jzECU"
+        title="Landscape cut 02"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">02</span><span class="tag">LANDSCAPE / 16:9</span></div>
+    </div>
+
+    <div class="video-frame">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/r5fGM8YU7kw"
+        title="Landscape cut 03"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">03</span><span class="tag">LANDSCAPE / 16:9</span></div>
+    </div>
+
+    <div class="video-frame">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/nfl9wvnnKAA"
+        title="Landscape cut 04"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+      <div class="video-meta"><span class="idx mono">04</span><span class="tag">LANDSCAPE / 16:9</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="section-pad container" id="contact">
+  <div class="contact-card reveal">
+    <div class="glow"></div>
+    <h2 class="grad-text red">LET'S<br>MAKE SOMETHING<br>MOVE.</h2>
+    <p class="contact-sub">Available for motion design, video editing and reel production.</p>
+    <div class="contact-links">
+      <a href="mailto:codewithewil33467872@gmail.com" class="pill">Email</a>
+      <a href="https://www.linkedin.com/in/shashank-singh-067422205/" target="_blank" rel="noopener" class="pill">LinkedIn</a>
+      <a href="https://youtube.com/@imIsekaiking" target="_blank" rel="noopener" class="pill">YouTube</a>
+      <a href="https://instagram.com/imisekaiking" target="_blank" rel="noopener" class="pill">Instagram</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fname">ISEKAI KING</div>
+  <div class="ftag">MOTION / VIDEO / AI</div>
+  <div class="copyright">© 2026 ISEKAI KING</div>
+</footer>
+
+<script>
+(function(){
+  const ph = document.getElementById('playhead');
+  window.addEventListener('mousemove', e=>{ ph.style.left=e.clientX+'px'; ph.style.top=e.clientY+'px'; });
+  document.querySelectorAll('a,button,.video-frame,.glass-card').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>ph.classList.add('hover'));
+    el.addEventListener('mouseleave', ()=>ph.classList.remove('hover'));
+  });
+
+  const fill = document.getElementById('scrollFill');
+  function onScroll(){
+    const h = document.documentElement;
+    fill.style.width = (h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in'); });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>
