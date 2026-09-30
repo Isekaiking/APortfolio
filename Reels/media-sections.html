@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work Archive · Images & Videos</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- INTEGRATION: Copy this STYLE into your page's HEAD. Your original page already loads these fonts. -->
+<style>
+/* Everything is scoped to wa- classes to avoid changing the rest of your site. */
+.wa-archive,.wa-viewer{--wa-bg:#07070a;--wa-panel:#0b0b10;--wa-text:#f2e9e6;--wa-muted:#b9b3ae;--wa-red:#ff3b2f;--wa-edge:rgba(255,120,90,.22);font-family:Inter,sans-serif;color:var(--wa-text);box-sizing:border-box}
+.wa-archive *,.wa-viewer *{box-sizing:border-box}
+.wa-archive{position:relative;isolation:isolate;background:var(--wa-bg);padding:30px 0 80px}
+.wa-archive::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 70% 0,rgba(255,59,47,.08),transparent 45%),linear-gradient(rgba(255,120,90,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,120,90,.035) 1px,transparent 1px);background-size:auto,84px 84px,84px 84px}
+.wa-section{max-width:1200px;margin:auto;padding:64px 5vw 24px}
+.wa-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:32px}
+.wa-kicker{font:11px 'JetBrains Mono',monospace;letter-spacing:.2em;color:var(--wa-red);text-transform:uppercase;margin:0 0 18px;display:flex;align-items:center;gap:12px}
+.wa-kicker::before{content:"";width:28px;height:1px;background:var(--wa-red)}
+.wa-heading h2{font:600 clamp(32px,5vw,52px)/1.08 'Space Grotesk',sans-serif;letter-spacing:-.03em;margin:0;color:#fdf3f1}
+.wa-subtitle{color:var(--wa-muted);font-size:14px;line-height:1.6;margin:14px 0 0}
+.wa-reference-note{margin:18px 0 0;padding:14px 18px;max-width:680px;border:1px solid rgba(255,120,90,.18);border-left:3px solid var(--wa-red);border-radius:0 10px 10px 0;background:linear-gradient(100deg,rgba(255,59,47,.13),rgba(255,59,47,.025));color:#fdf3f1;font:500 14px/1.7 Inter,sans-serif;box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
+.wa-reference-note strong{color:#ff8a5c;font-weight:600}
+.wa-count{font:11px 'JetBrains Mono',monospace;color:var(--wa-muted);white-space:nowrap;border:1px solid var(--wa-edge);border-radius:999px;padding:10px 14px}
+.wa-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.wa-card{min-width:0;background:rgba(255,255,255,.03);border:1px solid var(--wa-edge);border-radius:16px;overflow:hidden;box-shadow:inset 0 1px 1px rgba(255,230,225,.1),0 20px 32px rgba(0,0,0,.25)}
+.wa-media{position:relative;display:block;width:100%;aspect-ratio:4/5;padding:0;border:0;border-bottom:1px solid var(--wa-edge);background:radial-gradient(ellipse at 50% 30%,rgba(255,59,47,.09),transparent 70%),var(--wa-panel);color:var(--wa-text);cursor:pointer;overflow:hidden}
+.wa-section--videos .wa-media{aspect-ratio:9/16;cursor:auto}
+.wa-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.wa-section--videos .wa-number{pointer-events:none}
+.wa-media img,.wa-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+.wa-placeholder{height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;font:10px 'JetBrains Mono',monospace;letter-spacing:.15em;color:var(--wa-muted)}
+.wa-symbol{font:300 50px 'Space Grotesk',sans-serif;color:var(--wa-red)}
+.wa-number{position:absolute;top:14px;left:14px;border:1px solid var(--wa-edge);background:rgba(7,7,10,.8);border-radius:6px;padding:7px 9px;font:10px 'JetBrains Mono',monospace}
+.wa-open{position:absolute;bottom:16px;right:16px;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;border:1px solid var(--wa-edge);background:rgba(7,7,10,.8);font-size:17px;transition:background .2s}
+.wa-media:hover .wa-open{background:var(--wa-red);color:white}
+.wa-details{padding:20px}
+.wa-brand{font:10px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--wa-red);margin:0 0 10px}
+.wa-title{font:500 19px/1.35 'Space Grotesk',sans-serif;margin:0;overflow-wrap:anywhere}
+.wa-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.wa-link{font:10px 'JetBrains Mono',monospace;letter-spacing:.03em;border:1px solid var(--wa-edge);border-radius:999px;padding:10px 13px;text-decoration:none;color:var(--wa-text);cursor:pointer}
+.wa-link:hover{background:rgba(255,59,47,.12);border-color:var(--wa-red)}
+.wa-link[aria-disabled=true]{opacity:.4;cursor:default}
+.wa-media:focus-visible,.wa-link:focus-visible,.wa-close:focus-visible{outline:2px solid var(--wa-red);outline-offset:-3px}
+.wa-viewer{position:fixed;inset:0;margin:auto;padding:0;border:1px solid var(--wa-edge);border-radius:12px;background:#07070a;width:min(1100px,94vw);max-width:94vw;max-height:94dvh;overflow:auto;cursor:auto}
+.wa-viewer::backdrop{background:rgba(0,0,0,.94)}
+.wa-stage{min-height:160px;display:flex;justify-content:center;align-items:center;padding:52px 16px 16px}
+.wa-stage img,.wa-stage video{display:block;width:auto;height:auto;max-width:100%;max-height:calc(94dvh - 75px);object-fit:contain}
+.wa-stage iframe{display:block;border:0;width:min(420px,100%);height:min(740px,calc(94dvh - 75px));background:#000}
+.wa-close{position:absolute;right:10px;top:10px;width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--wa-edge);border-radius:50%;background:#151518;color:white;font-size:22px;cursor:pointer;z-index:2}
+.wa-error{color:var(--wa-muted);font:14px/1.6 Inter,sans-serif;padding:24px;text-align:center}
+@media(max-width:900px){.wa-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.wa-grid{grid-template-columns:1fr}.wa-heading{align-items:start}.wa-count{padding:8px;font-size:9px}.wa-section{padding-top:44px}.wa-heading h2{font-size:34px}}
+
+/* NAVIGATION — paths assume this page lives inside the Reels folder. */
+.wa-nav-wrap{position:sticky;top:0;z-index:500;padding:18px 5vw;background:linear-gradient(#07070a,rgba(7,7,10,.8),transparent);box-sizing:border-box}
+.wa-nav{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:12px 20px;background:rgba(11,11,16,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,120,90,.22);border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,230,225,.08),0 12px 30px rgba(0,0,0,.25);font-family:Inter,sans-serif;color:#f2e9e6;box-sizing:border-box}
+.wa-nav a{color:inherit;text-decoration:none}
+.wa-nav-brand{display:flex;align-items:center;gap:10px;font:600 14px 'Space Grotesk',sans-serif;white-space:nowrap}
+.wa-nav-diamond{width:11px;height:11px;border:1.5px solid #ff3b2f;transform:rotate(45deg);flex-shrink:0}
+.wa-nav-links,.wa-nav-social{display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.wa-nav-link{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;padding:0 11px;border:1px solid transparent;border-radius:999px;background:transparent;font:11px 'JetBrains Mono',monospace;cursor:pointer;white-space:nowrap;transition:background .2s,border-color .2s}
+.wa-nav .wa-nav-link{color:#b9b3ae}
+.wa-nav .wa-nav-link:hover{color:#fff;background:rgba(255,59,47,.08);border-color:rgba(255,120,90,.22)}
+.wa-nav-link:focus-visible,.wa-nav-brand:focus-visible{outline:2px solid #ff3b2f;outline-offset:3px}
+.wa-nav .wa-nav-cta{background:linear-gradient(140deg,#ff3b2f,#7a1010);color:white;padding:0 18px;box-shadow:0 6px 20px rgba(255,59,47,.2)}
+.wa-nav .wa-nav-cta:hover{background:linear-gradient(140deg,#ff5146,#981b17);color:white}
+@media(max-width:1050px){.wa-nav{border-radius:24px;justify-content:center}.wa-nav-brand{margin-right:auto}.wa-nav-social{width:100%;justify-content:center;padding-top:8px;border-top:1px solid rgba(255,120,90,.12)}}
+@media(max-width:520px){.wa-nav-wrap{padding:10px 4vw}.wa-nav{padding:12px;gap:9px}.wa-nav-brand{width:100%;justify-content:center;margin:0}.wa-nav-links{justify-content:center}.wa-nav-link{padding:0 9px;font-size:10px}.wa-nav-social{gap:2px}.wa-nav .wa-nav-cta{padding:0 12px}}
+</style>
+</head>
+<body style="margin:0;background:#07070a">
+<!-- INTEGRATION: Copy from START SECTIONS through END SCRIPT before your existing closing BODY tag. -->
+<!-- START SECTIONS -->
+<!-- NAVIGATION START: Home and contact are in the parent folder; Show Reels is in this folder. -->
+<div class="wa-nav-wrap">
+  <nav class="wa-nav" aria-label="Main navigation">
+    <a class="wa-nav-brand" href="../index.html"><span class="wa-nav-diamond" aria-hidden="true"></span>ISEKAI KING</a>
+    <div class="wa-nav-links">
+      <a class="wa-nav-link" href="../index.html" id="wa-nav-back">← Back</a>
+      <a class="wa-nav-link" href="../index.html">Home</a>
+      <a class="wa-nav-link" href="index.html">Show Reels</a>
+    </div>
+    <div class="wa-nav-social">
+      <a class="wa-nav-link" href="https://instagram.com/imisekaiking" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+      <a class="wa-nav-link" href="https://www.linkedin.com/in/shashank-singh-067422205/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+      <a class="wa-nav-link" href="https://www.youtube.com/@imIsekaiking" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
+      <a class="wa-nav-link wa-nav-cta" href="../index.html#contact">Get in Touch ↗</a>
+    </div>
+  </nav>
+</div>
+<!-- NAVIGATION END -->
+
+<div class="wa-archive" id="work-archive">
+  <div style="max-width:1200px;margin:0 auto;padding:24px 5vw 0;">
+  <p style="
+    display:inline-block;
+    margin:0;
+    padding:12px 20px;
+    border:1px solid rgba(255,120,90,.22);
+    border-radius:999px;
+    background:rgba(255,59,47,.08);
+    color:#f2e9e6;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    line-height:1.7;
+  ">
+    Work created between
+    <strong style="color:#ff8a5c;">24 Aug 2026</strong>
+    and
+    <strong style="color:#ff8a5c;">25 Sep 2026 </strong>
+     Working days == 34 days - ( 4 sunday, 1 saturday, 2 day leave) = 26.
+  </p>
+</div>
+  <section class="wa-section" aria-labelledby="wa-images-title">
+    <div class="wa-heading">
+      <div><p class="wa-kicker">01 / Visual archive</p><h2 id="wa-images-title">Graphic work</h2><p class="wa-subtitle">Static creatives, published posts & visual references.</p><p class="wa-reference-note">Used the <strong>supplied references</strong> as a starting point, then combined AI-generated imagery with my own <strong>layout, typography, and finishing touches in Canva.</strong></p></div>
+      <span class="wa-count" id="wa-image-count"></span>
+    </div>
+    <div class="wa-grid" id="wa-images"></div>
+  </section>
+  <section class="wa-section wa-section--videos" aria-labelledby="wa-videos-title">
+    <div class="wa-heading">
+      <div><p class="wa-kicker">02 / Motion archive</p><h2 id="wa-videos-title">Video work.</h2><p class="wa-subtitle">Films, reels & the references behind them.</p><p class="wa-reference-note">Used the <strong>supplied references</strong> as a starting point, then planned the scenes, shaped the story, and brought each video together in After Effects and Premiere Pro, combining AI-generated visuals with my own <strong>editing, motion graphics, and compositing.</strong></p></div>
+      <span class="wa-count" id="wa-video-count"></span>
+    </div>
+    <div class="wa-grid" id="wa-videos"></div>
+  </section>
+  <noscript><p class="wa-error">Enable JavaScript to display the media archive.</p></noscript>
+</div>
+<!-- Images open in this viewer. Videos play directly inside the gallery cards. -->
+<dialog class="wa-viewer" id="wa-viewer" aria-label="Image viewer">
+  <button type="button" class="wa-close" aria-label="Close media viewer" autofocus>×</button>
+  <div class="wa-stage"></div>
+</dialog>
+<!-- END SECTIONS -->
+<script>
+(() => {
+  const backLink = document.getElementById('wa-nav-back');
+  backLink.addEventListener('click', event => {
+    if (!event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey && window.history.length > 1) {
+      event.preventDefault();
+      window.history.back();
+    }
+    // Direct arrivals use the Home href as a fallback.
+  });
+  /* ======================= EDIT YOUR WORK HERE =======================
+     Duplicate any object to add another item. Reorder objects to change sequence.
+     src: direct file path, e.g. "assets/images/creative-01.jpg" or "assets/videos/reel-01.mp4".
+     For local videos use browser-playable files in src. For YouTube, set youtube to the 11-character video ID and leave src empty.
+     poster: optional video thumbnail, e.g. "assets/images/reel-cover-01.jpg".
+     post: public social post URL. reference: inspiration/brief URL.
+     Empty src values intentionally display placeholders. Empty links are disabled.
+     Relative paths are resolved from YOUR HTML file, not from this script.
+     Replace sample titles/brands below; nothing here claims actual delivery/publication.
+  =================================================================== */
+  const images = [
+  {
+    title: "carousel 01",
+    brand: "neuaura",
+    src: "../images/creative-01.png",
+    post: "https://www.instagram.com/p/DdwCro-G8EC/?img_index=1",
+    reference: ""
+  },
+  {
+    title: "carousel 02",
+    brand: "neuaura",
+    src: "../images/creative-02.png",
+    post: "https://www.instagram.com/p/DdjD7vpG0UT/?img_index=1",
+    reference: ""
+  },
+  {
+    title: "carousel 03",
+    brand: "neuaura",
+    src: "../images/creative-03.png",
+    post: "https://www.instagram.com/p/DdVtCJ2m3qO/?img_index=1",
+    reference: ""
+  }
+];
+  const videos = [
+    { title: "Video project 01", brand: "Brand name", src: "", youtube: "IMqGFhMhrd4", poster: "", post: "https://www.instagram.com/p/DcoDOAqitlu/", reference: "" },
+    { title: "Video project 02", brand: "Brand name", src: "", youtube: "-KZOhHLDASY", poster: "", post: "https://lnkd.in/p/gZFd5nwu", reference: "" },
+    { title: "Video project 03", brand: "Brand name", src: "", youtube: "uH8ex0Ypvgo", poster: "", post: "https://www.instagram.com/apnascreennetwork/", reference: "" },
+
+    { title: "Video project 04", brand: "Brand name", src: "", youtube: "M77tR24jgBM", poster: "", post: "https://www.instagram.com/malgudiarts/reels/", reference: "" },
+    { title: "Video project 05", brand: "Brand name", src: "", youtube: "ViTf_ISy0LI", poster: "", post: "https://www.instagram.com/malgudiarts/reels/", reference: "" },
+    { title: "Video project 06", brand: "Brand name", src: "", youtube: "bnpvp_QW9Tk", poster: "", post: "https://www.instagram.com/p/DdlsYM7kV1X/", reference: "" },
+
+    { title: "Video project 07", brand: "Brand name", src: "", youtube: "HYRLowpJKCA", poster: "", post: "https://www.instagram.com/malgudiarts/reels/", reference: "" },
+    { title: "Video project 08", brand: "Brand name", src: "", youtube: "uiMgN26EHF0", poster: "", post: "https://www.instagram.com/malgudiarts/reels/", reference: "" },
+    { title: "Video project 09", brand: "Brand name", src: "", youtube: "Hss-fLCZmGs", poster: "", post: "https://www.instagram.com/malgudiarts/reels/", reference: "" },
+
+    { title: "Video project 10", brand: "Brand name", src: "", youtube: "-iJ65lLpj6c", poster: "", post: "https://www.youtube.com/shorts/-iJ65lLpj6c", reference: "" },
+    { title: "Video project 11", brand: "Brand name", src: "", youtube: "_NZaW8FFdXg", poster: "", post: "https://www.instagram.com/apnascreennetwork/", reference: "" },
+    { title: "Video project 12", brand: "Brand name", src: "", youtube: "cosbw4Rj5vE", poster: "", post: "https://www.youtube.com/shorts/cosbw4Rj5vE", reference: "" },
+  ];
+  /* ====================== END EDITABLE CONTENT ====================== */
+  const dialog = document.getElementById('wa-viewer');
+  const stage = dialog.querySelector('.wa-stage');
+  let lastTrigger, previousOverflow;
+  function element(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+  function safeURL(value) {
+    if (!value || !value.trim()) return '';
+    try {
+      const url = new URL(value, document.baseURI);
+      return ['http:', 'https:', 'file:', 'blob:'].includes(url.protocol) ? url.href : '';
+    } catch { return ''; }
+  }
+  function makeLink(label, value) {
+    const url = safeURL(value);
+    const link = element(url ? 'a' : 'span', 'wa-link', label + ' ↗');
+    if (url) { link.href = url; link.target = '_blank'; link.rel = 'noopener noreferrer'; }
+    else { link.setAttribute('aria-disabled', 'true'); link.title = 'Add this URL in the content list'; }
+    return link;
+  }
+  function showMedia(item, type, trigger) {
+    stage.replaceChildren();
+    const src = safeURL(item.src);
+    if (!src) stage.append(element('p', 'wa-error', 'Add an image file path to this item’s src field.'));
+    else {
+      const media = element('img');
+      media.alt = item.title;
+      media.addEventListener('error', () => {
+        stage.replaceChildren(element('p', 'wa-error', 'This image could not be loaded. Check its file path.'));
+      }, { once: true });
+      media.src = src;
+      stage.append(media);
+    }
+    lastTrigger = trigger;
+    previousOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
+    dialog.showModal();
+    // Images alone use this popup. Videos are embedded directly in their cards.
+  }
+  function render(items, type, gridId, countId) {
+    const grid = document.getElementById(gridId);
+    document.getElementById(countId).textContent = String(items.length).padStart(2, '0') + ' ITEMS';
+    items.forEach((item, index) => {
+      const card = element('article', 'wa-card');
+      const button = element(type === 'image' ? 'button' : 'div', 'wa-media');
+      if (type === 'image') {
+        button.type = 'button';
+        button.setAttribute('aria-label', 'Open image: ' + item.title);
+      }
+      const placeholder = element('span', 'wa-placeholder');
+      placeholder.append(element('span', 'wa-symbol', type === 'image' ? '▧' : '▷'), element('span', '', type === 'image' ? 'IMAGE PREVIEW' : 'VIDEO PREVIEW'));
+      button.append(placeholder);
+      const src = safeURL(item.src);
+      const youtube = /^[A-Za-z0-9_-]{11}$/.test(item.youtube || '');
+      if (type === 'video' && youtube) {
+        const frame = element('iframe');
+        frame.src = 'https://www.youtube-nocookie.com/embed/' + item.youtube + '?playsinline=1';
+        frame.title = item.title;
+        frame.loading = 'lazy';
+        frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        frame.allowFullscreen = true;
+        frame.referrerPolicy = 'strict-origin-when-cross-origin';
+        button.replaceChildren(frame);
+      } else if (type === 'video' && src) {
+        // Direct-file fallback: click/tap or press Space/Enter to play/pause in place.
+        const video = element('video');
+        video.src = src;
+        video.playsInline = true;
+        video.preload = 'metadata';
+        if (safeURL(item.poster)) video.poster = safeURL(item.poster);
+        video.tabIndex = 0;
+        video.setAttribute('role', 'button');
+        video.setAttribute('aria-label', 'Play: ' + item.title);
+        const play = element('span', 'wa-open', '▶');
+        play.style.pointerEvents = 'none';
+        const toggle = () => {
+          if (video.paused) video.play().catch(() => {});
+          else video.pause();
+        };
+        video.addEventListener('click', toggle);
+        video.addEventListener('keydown', e => {
+          if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); }
+        });
+        video.addEventListener('play', () => { play.hidden = true; play.style.display = 'none'; video.setAttribute('aria-label', 'Pause: ' + item.title); });
+        video.addEventListener('pause', () => { play.hidden = false; play.style.display = ''; video.setAttribute('aria-label', 'Play: ' + item.title); });
+        video.addEventListener('error', () => button.replaceChildren(element('p', 'wa-error', 'Video unavailable. Check the file path.')), { once: true });
+        button.replaceChildren(video, play);
+      } else if (type === 'image') {
+        if (src) {
+          const preview = element('img');
+          preview.alt = ''; preview.loading = 'lazy'; preview.src = src;
+          preview.addEventListener('error', () => preview.remove(), { once: true });
+          button.append(preview);
+        }
+        button.append(element('span', 'wa-number', String(index + 1).padStart(2, '0')), element('span', 'wa-open', '↗'));
+        button.addEventListener('click', () => showMedia(item, type, button));
+      }
+      const details = element('div', 'wa-details');
+      const links = element('div', 'wa-links');
+      links.append(makeLink('View post', item.post), makeLink('Reference', item.reference));
+      details.append(element('p', 'wa-brand', item.brand), element('h3', 'wa-title', item.title), links);
+      card.append(button, details); grid.append(card);
+    });
+  }
+  dialog.querySelector('.wa-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', event => {
+    const rect = dialog.getBoundingClientRect();
+    if (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    const video = stage.querySelector('video');
+    if (video) { video.pause(); video.removeAttribute('src'); video.load(); }
+    stage.replaceChildren();
+    document.documentElement.style.overflow = previousOverflow || '';
+    if (lastTrigger) lastTrigger.focus();
+  });
+  render(images, 'image', 'wa-images', 'wa-image-count');
+  render(videos, 'video', 'wa-videos', 'wa-video-count');
+})();
+</script>
+<!-- END SCRIPT -->
+</body>
+</html>
